@@ -1,0 +1,57 @@
+# SDV Testbench - Base Image
+# Image de base pour toutes les applications SDV
+FROM alpine:3.18
+
+LABEL maintainer="SDV Testbench"
+LABEL version="1.0"
+LABEL description="Base image for SDV vehicle applications"
+
+# Installation des outils de base
+RUN apk add --no-cache \
+    python3 \
+    py3-pip \
+    bash \
+    gcc \
+    musl-dev \
+    linux-headers \
+    python3-dev \
+    libffi-dev \
+    openssl-dev \
+    build-base \
+    curl \
+    jq \
+    net-tools \
+    iperf3 \
+    stress-ng \
+    htop \
+    procps \
+    && rm -rf /var/cache/apk/*
+
+# Installation des bibliothèques Python pour simulation
+RUN pip3 install --no-cache-dir \
+    psutil \
+    requests \
+    pyyaml \
+    numpy
+
+# Création d'un utilisateur non-root pour sécurité
+RUN addgroup -g 1000 sdv && \
+    adduser -D -s /bin/bash -u 1000 -G sdv sdv
+
+# Répertoire de travail
+WORKDIR /app
+
+# Copie des scripts utilitaires communs
+COPY scripts/common/ /app/scripts/
+
+# Variables d'environnement
+ENV PYTHONPATH=/app
+ENV SDV_APP_TYPE=base
+ENV SDV_LOG_LEVEL=INFO
+
+# Permissions
+RUN chown -R sdv:sdv /app
+USER sdv
+
+# Point d'entrée par défaut
+CMD ["python3", "-c", "print('SDV Base Image Ready')"] 

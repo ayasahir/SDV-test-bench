@@ -1,0 +1,46 @@
+# SDV Testbench - Infotainment Applications
+FROM alpine:3.18
+
+LABEL category="infotainment"
+LABEL priority="low"
+LABEL description="Entertainment and information vehicle applications"
+
+# Installation des outils
+RUN apk add --no-cache \
+    python3 \
+    py3-pip \
+    bash \
+    curl \
+    ffmpeg \
+     gcc \
+    musl-dev \
+    linux-headers \
+    python3-dev \
+    libffi-dev \
+    openssl-dev \
+    build-base \
+    && rm -rf /var/cache/apk/*
+
+# Installation des bibliothèques Python
+RUN pip3 install --no-cache-dir \
+    psutil \
+    requests
+
+# Variables d'environnement pour infotainment
+ENV SDV_APP_TYPE=infotainment
+ENV SDV_PRIORITY=low
+ENV SDV_REAL_TIME=false
+
+# Répertoire de travail
+WORKDIR /app
+
+# Copie du simulateur infotainment
+COPY docker/infotainment_simulator.py /app/
+
+# Utilisateur non-root
+RUN adduser -D -s /bin/bash sdv
+RUN chown -R sdv:sdv /app
+USER sdv
+
+# Point d'entrée
+CMD ["python3", "/app/infotainment_simulator.py"] 

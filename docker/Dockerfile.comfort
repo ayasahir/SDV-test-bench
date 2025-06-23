@@ -1,0 +1,45 @@
+# SDV Testbench - Comfort Applications
+FROM alpine:3.18
+
+LABEL category="comfort"
+LABEL priority="medium"
+LABEL description="Comfort and convenience vehicle applications"
+
+# Installation des outils
+RUN apk add --no-cache \
+    python3 \
+    py3-pip \
+    bash \
+    curl \
+     gcc \
+    musl-dev \
+    linux-headers \
+    python3-dev \
+    libffi-dev \
+    openssl-dev \
+    build-base \
+    && rm -rf /var/cache/apk/*
+
+# Installation des bibliothèques Python
+RUN pip3 install --no-cache-dir \
+    psutil \
+    requests
+
+# Variables d'environnement pour comfort
+ENV SDV_APP_TYPE=comfort
+ENV SDV_PRIORITY=medium
+ENV SDV_REAL_TIME=false
+
+# Répertoire de travail
+WORKDIR /app
+
+# Copie du simulateur comfort
+COPY docker/comfort_simulator.py /app/
+
+# Utilisateur non-root
+RUN adduser -D -s /bin/bash sdv
+RUN chown -R sdv:sdv /app
+USER sdv
+
+# Point d'entrée
+CMD ["python3", "/app/comfort_simulator.py"] 
