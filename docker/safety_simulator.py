@@ -121,12 +121,12 @@ class SafetyAppSimulator:
                     # Simulation d'intervention automatique
                     if random.random() < 0.3:  # 30% chance d'intervention
                         self.metrics['interventions'] += 1
-                        print(f"[{datetime.now()}] {self.app_name}: 🛡️  SAFETY_INTERVENTION_ACTIVATED")
+                        print(f"[{datetime.now()}] {self.app_name}:  SAFETY_INTERVENTION_ACTIVATED")
             
             # Affichage statut normal périodique
             if self.metrics['cycles'] % 50 == 0:  # Toutes les 50 cycles
                 uptime = (datetime.now() - self.metrics['start_time']).total_seconds()
-                print(f"[{datetime.now()}] {self.app_name}: ✅ Running normally - "
+                print(f"[{datetime.now()}] {self.app_name}:  Running normally - "
                       f"Cycle {self.metrics['cycles']}, Uptime: {uptime:.1f}s, "
                       f"Alerts: {self.metrics['alerts']}, Interventions: {self.metrics['interventions']}")
             
@@ -141,7 +141,7 @@ class SafetyAppSimulator:
 if __name__ == '__main__':
     app_name = os.environ.get('APP_NAME', 'emergency-brake')
     
-    print("🚗 SDV Safety Application Simulator")
+    print(" SDV Safety Application Simulator")
     print("="*50)
     print(f"Application: {app_name}")
     print(f"Priority: {os.environ.get('SDV_PRIORITY', 'critical')}")

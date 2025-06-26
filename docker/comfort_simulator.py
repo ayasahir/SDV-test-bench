@@ -148,12 +148,12 @@ class ComfortAppSimulator:
             # Simulation de requêtes utilisateur
             if random.random() < 0.01:  # 1% chance de requête utilisateur
                 self.metrics['user_requests'] += 1
-                print(f"[{datetime.now()}] {self.app_name}: 👤 USER_REQUEST_PROCESSED")
+                print(f"[{datetime.now()}] {self.app_name}:  USER_REQUEST_PROCESSED")
             
             # Affichage statut normal périodique
             if self.metrics['cycles'] % 30 == 0:  # Toutes les 30 cycles
                 uptime = (datetime.now() - self.metrics['start_time']).total_seconds()
-                print(f"[{datetime.now()}] {self.app_name}: ✅ Operating normally - "
+                print(f"[{datetime.now()}] {self.app_name}:  Operating normally - "
                       f"Cycle {self.metrics['cycles']}, Uptime: {uptime:.1f}s, "
                       f"Adjustments: {self.metrics['adjustments']}, User requests: {self.metrics['user_requests']}")
             
@@ -168,7 +168,7 @@ class ComfortAppSimulator:
 if __name__ == '__main__':
     app_name = os.environ.get('APP_NAME', 'climate-control')
     
-    print("🏠 SDV Comfort Application Simulator")
+    print(" SDV Comfort Application Simulator")
     print("="*50)
     print(f"Application: {app_name}")
     print(f"Priority: {os.environ.get('SDV_PRIORITY', 'medium')}")
