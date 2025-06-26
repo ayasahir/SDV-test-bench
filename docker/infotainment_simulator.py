@@ -177,7 +177,7 @@ class InfotainmentAppSimulator:
             if interactions:
                 self.metrics['user_interactions'] += len(interactions)
                 for interaction in interactions:
-                    print(f"[{datetime.now()}] {self.app_name}: 👆 {interaction}")
+                    print(f"[{datetime.now()}] {self.app_name}: {interaction}")
             
             # Simulation de nouveau contenu
             if random.random() < 0.02:  # 2% chance de nouveau contenu
@@ -188,7 +188,7 @@ class InfotainmentAppSimulator:
             # Affichage statut normal périodique
             if self.metrics['cycles'] % 20 == 0:  # Toutes les 20 cycles
                 uptime = (datetime.now() - self.metrics['start_time']).total_seconds()
-                print(f"[{datetime.now()}] {self.app_name}: ✅ Streaming normally - "
+                print(f"[{datetime.now()}] {self.app_name}: Streaming normally - "
                       f"Cycle {self.metrics['cycles']}, Uptime: {uptime:.1f}s, "
                       f"Bandwidth: {bandwidth_mbps:.1f}Mbps, "
                       f"Data: {self.metrics['data_processed_mb']:.1f}MB, "
