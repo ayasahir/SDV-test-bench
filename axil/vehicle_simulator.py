@@ -282,7 +282,7 @@ class VehicleSimulator:
         self.running = True
         self._start_time = time.time()
         
-        logger.info(f"🚀 Simulation véhicule démarrée (durée: {duration}s, changements: {self.change_interval}s)")
+        logger.info(f" Simulation véhicule démarrée (durée: {duration}s, changements: {self.change_interval}s)")
         
         def simulation_loop():
             cycles = 0
@@ -340,7 +340,7 @@ class VehicleSimulator:
         self.running = False
         if hasattr(self, 'simulation_thread'):
             self.simulation_thread.join(timeout=2)
-        logger.info("🛑 Simulation véhicule arrêtée")
+        logger.info(" Simulation véhicule arrêtée")
     
     def export_history(self, filename=None):
         """Exporte l'historique de simulation"""
@@ -403,7 +403,7 @@ class TestScenarioSimulator(VehicleSimulator):
                 
                 time.sleep(1)
             
-            logger.info("✅ Scénario de thèse terminé")
+            logger.info(" Scénario de thèse terminé")
         
         # Démarrer le scénario
         self.running = True
@@ -413,12 +413,12 @@ class TestScenarioSimulator(VehicleSimulator):
 
 if __name__ == '__main__':
     # Test du simulateur
-    print("🚗 Vehicle Simulator - SDV Testbench")
+    print("Vehicle Simulator - SDV Testbench")
     print("Test de simulation d'état véhicule\n")
     
     # Callback d'exemple
     def on_state_change(old_state, new_state, parameters):
-        print(f"📡 Callback: {old_state.value} → {new_state.value} "
+        print(f"Callback: {old_state.value} → {new_state.value} "
               f"(vitesse: {parameters.speed:.1f} km/h)")
     
     # Test scénario normal
