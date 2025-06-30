@@ -29,14 +29,14 @@ build_image() {
     echo -e "${GREEN}Building $image_name ($category)...${NC}"
     
     if docker build -f $dockerfile -t ${REGISTRY_PREFIX}/${image_name}:${TAG} .; then
-        echo -e "${GREEN}✓ $image_name built successfully${NC}"
+        echo -e "${GREEN} $image_name built successfully${NC}"
         
         # Tagging pour usage local
         docker tag ${REGISTRY_PREFIX}/${image_name}:${TAG} ${image_name}:${TAG}
         
         return 0
     else
-        echo -e "${RED}✗ Failed to build $image_name${NC}"
+        echo -e "${RED} Failed to build $image_name${NC}"
         return 1
     fi
 }
