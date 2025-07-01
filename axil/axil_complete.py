@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 AXIL Orchestrator - SDV Testbench
-Implémentation de l'algorithme d'orchestration dynamique pour véhicule SDV
-Basé sur les spécifications de la thèse (pages 124-125)
+Gère les états du véhicule, les ressources et le déploiement des applis Kubernetes  
+Nécessite un cluster Kubernetes activé (utiliser run_baseline_local.sh)
 """
 
 import time
@@ -32,13 +32,14 @@ logger = logging.getLogger(__name__)
 
 class VehicleStateManager:
     """Gestionnaire d'état du véhicule avec changements aléatoires toutes les 10s"""
-    
+    #Initialise l'état avec "paring" avec un intervalle de changement d'état de 10 secondes
     def __init__(self):
         self.states = ['driving', 'parking', 'charging', 'emergency']
         self.current_state = 'parking'
         self.state_change_interval = 10  # secondes
         self.running = True
-        
+
+    #Retourne l'état actuel du véhicule    
     def get_current_state(self):
         return self.current_state
     
