@@ -31,28 +31,29 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class VehicleStateManager:
-    """Gestionnaire d'état du véhicule avec changements aléatoires toutes les 10s"""
-    #Initialise l'état avec "paring" avec un intervalle de changement d'état de 10 secondes
+    """Initialise l'état avec "paring" avec un intervalle de changement d'état 
+    de 10 secondes"""
     def __init__(self):
         self.states = ['driving', 'parking', 'charging', 'emergency']
         self.current_state = 'parking'
         self.state_change_interval = 10  # secondes
         self.running = True
 
-    #Retourne l'état actuel du véhicule    
+    """Retourne l'état actuel du véhicule"""
     def get_current_state(self):
         return self.current_state
     
+    """Change l'état du véhicule de manière aléatoire"""
     def change_state_randomly(self):
-        """Change l'état du véhicule de manière aléatoire"""
         old_state = self.current_state
         self.current_state = random.choice(self.states)
         if old_state != self.current_state:
             logger.info(f" État véhicule changé: {old_state} → {self.current_state}")
         return self.current_state
     
+    """Démarre le monitoring d'état en arrière-plan"""
     def start_state_monitor(self):
-        """Démarre le monitoring d'état en arrière-plan"""
+        
         def state_loop():
             while self.running:
                 time.sleep(self.state_change_interval)
@@ -63,14 +64,16 @@ class VehicleStateManager:
         thread.start()
         logger.info(f" Monitoring d'état démarré (changement toutes les {self.state_change_interval}s)")
 
+"""Moniteur de ressources pour les nœuds du cluster"""
 class ResourceMonitor:
-    """Moniteur de ressources pour les nœuds du cluster"""
+    
     
     def __init__(self):
         self.nodes_resources = {}
         
+    """Récupère les ressources disponibles d'un nœud"""
     def get_node_resources(self, node_name):
-        """Récupère les ressources disponibles d'un nœud"""
+        
         try:
             # Simulation des ressources (en production, utiliser metrics-server)
             cpu_percent = random.uniform(20, 80)  # Simulation CPU usage
@@ -85,8 +88,9 @@ class ResourceMonitor:
             logger.error(f"Erreur récupération ressources {node_name}: {e}")
             return {'cpu_available': 50, 'memory_available': 50, 'network_bandwidth': 5}
     
+    """Vérifie si un nœud peut héberger une application"""
     def check_resource_constraints(self, node_name, app_requirements):
-        """Vérifie si un nœud peut héberger une application"""
+        
         resources = self.get_node_resources(node_name)
         
         can_deploy = (
@@ -97,15 +101,16 @@ class ResourceMonitor:
         
         return can_deploy, resources
 
+"""Gestionnaire des applications SDV"""
 class ApplicationManager:
-    """Gestionnaire des applications SDV"""
     
     def __init__(self):
         self.apps_config = self._load_apps_configuration()
         self.deployed_apps = {}
-        
+
+    """Charge la configuration des 30 applications"""   
     def _load_apps_configuration(self):
-        """Charge la configuration des 30 applications"""
+        
         apps = []
         
         # Applications Safety (priorité haute)
@@ -199,8 +204,9 @@ class ApplicationManager:
         
         return state_mapping.get(vehicle_state, {'safety': [], 'comfort': [], 'infotainment': []})
 
+"""Orchestrateur principal AXIL pour SDV"""
 class AXILOrchestrator:
-    """Orchestrateur principal AXIL pour SDV"""
+   
     
     def __init__(self):
         self.vehicle_state_manager = VehicleStateManager()
@@ -224,8 +230,9 @@ class AXILOrchestrator:
             logger.error(f" Erreur connexion Kubernetes: {e}")
             sys.exit(1)
     
+    """Algorithme d'optimisation des déploiements selon l'état du véhicule"""
     def optimize_deployments(self):
-        """Algorithme d'optimisation des déploiements selon l'état du véhicule"""
+        
         start_time = time.time()
         
         current_state = self.vehicle_state_manager.get_current_state()
