@@ -155,22 +155,19 @@ class ApplicationManager:
             {'name': 'weather-app', 'priority': 5, 'cpu': 4, 'memory': 8, 'bandwidth': 0.5}
         ]
         
-        # Assignation des zones
-        for app in safety_apps:
-            app['zone'] = 'safety'
-            app['category'] = 'safety'
-        for app in comfort_apps:
-            app['zone'] = 'comfort'
-            app['category'] = 'comfort'
-        for app in infotainment_apps:
-            app['zone'] = 'infotainment'
-            app['category'] = 'infotainment'
+        # Define Global UX Weights
+        ux_weights = {
+            'safety': 3.0,
+            'comfort': 2.0,
+            'infotainment': 1.0
+        }
+
+        # Calculate Global UX Values
+        for app in safety_apps + comfort_apps + infotainment_apps:
+            app['global_ux_value'] = app['priority'] * ux_weights[app['category']]
+            apps.append(app)
         
-        apps.extend(safety_apps)
-        apps.extend(comfort_apps)
-        apps.extend(infotainment_apps)
-        
-        logger.info(f" Configuration chargée: {len(apps)} applications")
+        logger.info(f"Configuration loaded: {len(apps)} applications with Global UX Values")
         return apps
     
     def get_apps_for_state(self, vehicle_state):
@@ -252,8 +249,8 @@ class AXILOrchestrator:
                 if app_config:
                     all_required_apps.append((zone, app_config))
         
-        # Tri par priorité (1 = plus haute priorité)
-        all_required_apps.sort(key=lambda x: x[1]['priority'])
+        # Sort by Global UX Value (lower is higher priority)
+        all_required_apps.sort(key=lambda x: x[1]['global_ux_value'])
         
         # Déploiement avec contraintes
         for zone, app_config in all_required_apps:
