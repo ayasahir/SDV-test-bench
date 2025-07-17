@@ -36,7 +36,7 @@ echo "Nouveau hostname: $role"
 
 # Étape 2 - Mise à jour du système
 echo -e "${GREEN}=== [2/8] Mise à jour du système ===${NC}"
-sudo apt update && sudo apt upgrade -y
+sudo apt update 
 
 # Étape 3 - Installation des outils essentiels
 echo -e "${GREEN}=== [3/8] Installation des outils essentiels ===${NC}"
