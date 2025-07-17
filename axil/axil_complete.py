@@ -31,7 +31,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class VehicleStateManager:
-    """Initialise l'état avec "paring" avec un intervalle de changement d'état 
+    """Initialise l'état avec "parking" avec un intervalle de changement d'état 
     de 10 secondes"""
     def __init__(self):
         self.states = ['driving', 'parking', 'charging', 'emergency']

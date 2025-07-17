@@ -18,7 +18,7 @@ if ! command -v docker &> /dev/null; then
 fi
 
 if [ "$(hostname)" != "orchestrator-node" ]; then
-    echo -e "${YELLOW}⚠️  Hostname actuel: $(hostname)${NC}"
+    echo -e "${YELLOW} Hostname actuel: $(hostname)${NC}"
     echo "Ce script doit être lancé sur le nœud orchestrateur"
     read -p "Continuer quand même? (y/N): " -n 1 -r
     echo
