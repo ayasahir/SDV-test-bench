@@ -51,9 +51,9 @@ sudo systemctl enable docker
 sudo systemctl start docker
 
 # Étape 5 - Installation du noyau temps réel PREEMPT-RT
-echo -e "${GREEN}=== [5/8] Installation du noyau PREEMPT-RT ===${NC}"
-echo "Installation du kernel temps réel pour support TSN..."
-sudo apt install -y raspberrypi-kernel-rt
+#echo -e "${GREEN}=== [5/8] Installation du noyau PREEMPT-RT ===${NC}"
+#echo "Installation du kernel temps réel pour support TSN..."
+#sudo apt install -y raspberrypi-kernel-rt
 
 # Étape 6 - Configuration réseau pour TSN/TAS
 echo -e "${GREEN}=== [6/8] Configuration réseau TSN/TAS ===${NC}"
@@ -63,12 +63,40 @@ sudo apt install -y wondershaper
 # Création du script de limitation réseau
 cat << 'EOF' | sudo tee /usr/local/bin/setup_network_limit.sh > /dev/null
 #!/bin/bash
-# Script pour limiter la bande passante à 10Mbps (simulation TAS)
+# Script to limit network to 10Mbps for SDV test
+# Run after boot when network is ready
+LOG_FILE="/tmp/network_limit.log"
+echo "[$(date)] Starting network limit" >> $LOG_FILE
+# Check if tc is installed
+if ! tc -V &> /dev/null; then
+    echo "[ERROR] tc not found. Install it: sudo apt-get install iproute2" >> $LOG_FILE
+    exit 1
+fi
+# Get network interface
 INTERFACE=$(ip route get 8.8.8.8 | awk '{print $5; exit}')
-echo "Configuration TSN/TAS sur interface: $INTERFACE"
-# Limitation à 10Mbps down/up
-sudo wondershaper $INTERFACE 10000 10000
-echo "Limite réseau appliquée: 10Mbps"
+if [ -z "$INTERFACE" ]; then
+    echo "[ERROR] No network interface found. Check with: ip link" >> $LOG_FILE
+    exit 1
+fi
+echo "[INFO] Using interface: $INTERFACE" >> $LOG_FILE
+# Check if interface is up
+if ! ip link show $INTERFACE | grep -q "state UP"; then
+    echo "[ERROR] Interface $INTERFACE not up" >> $LOG_FILE
+    exit 1
+fi
+# Clear old tc rules
+tc qdisc del dev $INTERFACE root 2>/dev/null
+echo "[INFO] Cleared old rules" >> $LOG_FILE
+# Set 10Mbps limit
+if tc qdisc add dev $INTERFACE root tbf rate 10mbit burst 32kbit latency 400ms; then
+    echo "[SUCCESS] 10Mbps limit set" >> $LOG_FILE
+else
+    echo "[ERROR] Failed to set limit" >> $LOG_FILE
+    exit 1
+fi
+# Show result
+tc qdisc show dev $INTERFACE >> $LOG_FILE
+echo "[$(date)] Done" >> $LOG_FILE
 EOF
 
 sudo chmod +x /usr/local/bin/setup_network_limit.sh
@@ -76,22 +104,6 @@ sudo chmod +x /usr/local/bin/setup_network_limit.sh
 # Étape 7 - Configuration pour démarrage automatique
 echo -e "${GREEN}=== [7/8] Configuration du démarrage automatique ===${NC}"
 
-# Service pour limitation réseau au boot
-cat << EOF | sudo tee /etc/systemd/system/sdv-network-limit.service > /dev/null
-[Unit]
-Description=SDV Network Bandwidth Limitation (TSN/TAS Simulation)
-After=network.target
-
-[Service]
-Type=oneshot
-ExecStart=/usr/local/bin/setup_network_limit.sh
-RemainAfterExit=true
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-sudo systemctl enable sdv-network-limit.service
 
 # Script de vérification post-reboot
 cat << 'EOF' | sudo tee /usr/local/bin/verify_setup.sh > /dev/null
@@ -134,5 +146,7 @@ for i in {10..1}; do
     sleep 1
 done
 
+echo "Run this after boot to limit network to 10Mbps:"
+echo "sudo /usr/local/bin/setup_network_limit.sh"
 echo "Redémarrage maintenant..."
 sudo reboot
