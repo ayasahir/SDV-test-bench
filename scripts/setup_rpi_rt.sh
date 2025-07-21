@@ -121,7 +121,17 @@ docker run --rm hello-world >/dev/null 2>&1 && echo "✓ Docker fonctionne" || e
 # Test limitation réseau
 INTERFACE=$(ip route get 8.8.8.8 | awk '{print $5; exit}')
 echo "Interface réseau: $INTERFACE"
-tc qdisc show dev $INTERFACE 2>/dev/null | grep -q tbf && echo "✓ Limitation réseau active" || echo "! Limitation réseau non active"
+tc qdisc show dev $INTERFACE 2>/dev/null | grep -q tbf && echo "Limitation réseau active" || echo "Limitation réseau non active"
+
+# Test Kubernetes
+echo "Vérification des noeuds..."
+kubectl get nodes
+echo -e "\nVérification des pods système..."
+kubectl get pods -n kube-system
+echo -e "\nVérification des services..."
+kubectl cluster-info
+echo -e "\nVérification de Docker..."
+sudo systemctl status docker --no-pager
 
 echo "=== Configuration terminée ==="
 EOF
