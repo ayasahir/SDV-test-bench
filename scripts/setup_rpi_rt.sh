@@ -121,7 +121,7 @@ docker run --rm hello-world >/dev/null 2>&1 && echo "✓ Docker fonctionne" || e
 # Test limitation réseau
 INTERFACE=$(ip route get 8.8.8.8 | awk '{print $5; exit}')
 echo "Interface réseau: $INTERFACE"
-tc qdisc show dev $INTERFACE 2>/dev/null | grep -q wondershaper && echo "✓ Limitation réseau active" || echo "! Limitation réseau non active"
+tc qdisc show dev $INTERFACE 2>/dev/null | grep -q tbf && echo "✓ Limitation réseau active" || echo "! Limitation réseau non active"
 
 echo "=== Configuration terminée ==="
 EOF
@@ -131,7 +131,7 @@ sudo chmod +x /usr/local/bin/verify_setup.sh
 # Étape 8 - Instructions de redémarrage
 echo -e "${GREEN}=== [8/8] Configuration terminée ===${NC}"
 echo ""
-echo -e "${YELLOW}⚠️  IMPORTANT ⚠️${NC}"
+echo -e "${YELLOW}  IMPORTANT ${NC}"
 echo "Le système va redémarrer dans 10 secondes pour activer:"
 echo "  → Noyau temps réel (PREEMPT-RT)"
 echo "  → Configuration Docker"
