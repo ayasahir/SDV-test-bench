@@ -115,44 +115,44 @@ class ApplicationManager:
         
         # Applications Safety (priorité haute)
         safety_apps = [
-            {'name': 'emergency-brake', 'priority': 1, 'cpu': 15, 'memory': 20, 'bandwidth': 2},
-            {'name': 'collision-avoidance', 'priority': 1, 'cpu': 20, 'memory': 25, 'bandwidth': 3},
-            {'name': 'lane-keeping', 'priority': 2, 'cpu': 12, 'memory': 15, 'bandwidth': 1.5},
-            {'name': 'adaptive-cruise', 'priority': 2, 'cpu': 18, 'memory': 22, 'bandwidth': 2.5},
-            {'name': 'driver-monitoring', 'priority': 1, 'cpu': 10, 'memory': 18, 'bandwidth': 1},
-            {'name': 'traffic-sign-detection', 'priority': 2, 'cpu': 25, 'memory': 30, 'bandwidth': 2},
-            {'name': 'pedestrian-detection', 'priority': 1, 'cpu': 22, 'memory': 28, 'bandwidth': 2.5},
-            {'name': 'vehicle-tracking', 'priority': 2, 'cpu': 16, 'memory': 20, 'bandwidth': 1.8},
-            {'name': 'emergency-call', 'priority': 1, 'cpu': 5, 'memory': 10, 'bandwidth': 0.5},
-            {'name': 'airbag-control', 'priority': 1, 'cpu': 8, 'memory': 12, 'bandwidth': 0.3}
+            {'name': 'emergency-brake', 'priority': 1, 'cpu': 15, 'memory': 20, 'bandwidth': 2, 'category': 'safety'},
+            {'name': 'collision-avoidance', 'priority': 1, 'cpu': 20, 'memory': 25, 'bandwidth': 3, 'category': 'safety'},
+            {'name': 'lane-keeping', 'priority': 2, 'cpu': 12, 'memory': 15, 'bandwidth': 1.5, 'category': 'safety'},
+            {'name': 'adaptive-cruise', 'priority': 2, 'cpu': 18, 'memory': 22, 'bandwidth': 2.5, 'category': 'safety'},
+            {'name': 'driver-monitoring', 'priority': 1, 'cpu': 10, 'memory': 18, 'bandwidth': 1, 'category': 'safety'},
+            {'name': 'traffic-sign-detection', 'priority': 2, 'cpu': 25, 'memory': 30, 'bandwidth': 2, 'category': 'safety'},
+            {'name': 'pedestrian-detection', 'priority': 1, 'cpu': 22, 'memory': 28, 'bandwidth': 2.5, 'category': 'safety'},
+            {'name': 'vehicle-tracking', 'priority': 2, 'cpu': 16, 'memory': 20, 'bandwidth': 1.8, 'category': 'safety'},
+            {'name': 'emergency-call', 'priority': 1, 'cpu': 5, 'memory': 10, 'bandwidth': 0.5, 'category': 'safety'},
+            {'name': 'airbag-control', 'priority': 1, 'cpu': 8, 'memory': 12, 'bandwidth': 0.3, 'category': 'safety'}
         ]
         
         # Applications Comfort (priorité moyenne)
         comfort_apps = [
-            {'name': 'climate-control', 'priority': 3, 'cpu': 8, 'memory': 12, 'bandwidth': 0.5},
-            {'name': 'seat-adjustment', 'priority': 4, 'cpu': 5, 'memory': 8, 'bandwidth': 0.2},
-            {'name': 'lighting-control', 'priority': 3, 'cpu': 6, 'memory': 10, 'bandwidth': 0.3},
-            {'name': 'mirror-adjustment', 'priority': 4, 'cpu': 4, 'memory': 6, 'bandwidth': 0.2},
-            {'name': 'parking-assist', 'priority': 3, 'cpu': 15, 'memory': 20, 'bandwidth': 1.5},
-            {'name': 'navigation-basic', 'priority': 3, 'cpu': 12, 'memory': 18, 'bandwidth': 1},
-            {'name': 'voice-commands', 'priority': 3, 'cpu': 10, 'memory': 15, 'bandwidth': 0.8},
-            {'name': 'gesture-control', 'priority': 4, 'cpu': 14, 'memory': 16, 'bandwidth': 0.6},
-            {'name': 'ambient-lighting', 'priority': 4, 'cpu': 3, 'memory': 5, 'bandwidth': 0.1},
-            {'name': 'massage-seats', 'priority': 4, 'cpu': 6, 'memory': 8, 'bandwidth': 0.2}
+            {'name': 'climate-control', 'priority': 3, 'cpu': 8, 'memory': 12, 'bandwidth': 0.5, 'category': 'comfort'},
+            {'name': 'seat-adjustment', 'priority': 4, 'cpu': 5, 'memory': 8, 'bandwidth': 0.2, 'category': 'comfort'},
+            {'name': 'lighting-control', 'priority': 3, 'cpu': 6, 'memory': 10, 'bandwidth': 0.3, 'category': 'comfort'},
+            {'name': 'mirror-adjustment', 'priority': 4, 'cpu': 4, 'memory': 6, 'bandwidth': 0.2, 'category': 'comfort'},
+            {'name': 'parking-assist', 'priority': 3, 'cpu': 15, 'memory': 20, 'bandwidth': 1.5, 'category': 'comfort'},
+            {'name': 'navigation-basic', 'priority': 3, 'cpu': 12, 'memory': 18, 'bandwidth': 1, 'category': 'comfort'},
+            {'name': 'voice-commands', 'priority': 3, 'cpu': 10, 'memory': 15, 'bandwidth': 0.8, 'category': 'comfort'},
+            {'name': 'gesture-control', 'priority': 4, 'cpu': 14, 'memory': 16, 'bandwidth': 0.6, 'category': 'comfort'},
+            {'name': 'ambient-lighting', 'priority': 4, 'cpu': 3, 'memory': 5, 'bandwidth': 0.1, 'category': 'comfort'},
+            {'name': 'massage-seats', 'priority': 4, 'cpu': 6, 'memory': 8, 'bandwidth': 0.2, 'category': 'comfort'}
         ]
         
         # Applications Infotainment (priorité basse)
         infotainment_apps = [
-            {'name': 'media-player', 'priority': 5, 'cpu': 15, 'memory': 25, 'bandwidth': 2},
-            {'name': 'streaming-video', 'priority': 5, 'cpu': 25, 'memory': 40, 'bandwidth': 5},
-            {'name': 'games-engine', 'priority': 5, 'cpu': 30, 'memory': 50, 'bandwidth': 3},
-            {'name': 'social-media', 'priority': 5, 'cpu': 12, 'memory': 20, 'bandwidth': 2.5},
-            {'name': 'web-browser', 'priority': 5, 'cpu': 20, 'memory': 35, 'bandwidth': 3.5},
-            {'name': 'music-streaming', 'priority': 4, 'cpu': 8, 'memory': 15, 'bandwidth': 1.5},
-            {'name': 'video-calls', 'priority': 4, 'cpu': 18, 'memory': 28, 'bandwidth': 4},
-            {'name': 'ar-navigation', 'priority': 4, 'cpu': 35, 'memory': 45, 'bandwidth': 4.5},
-            {'name': 'news-reader', 'priority': 5, 'cpu': 6, 'memory': 12, 'bandwidth': 1},
-            {'name': 'weather-app', 'priority': 5, 'cpu': 4, 'memory': 8, 'bandwidth': 0.5}
+            {'name': 'media-player', 'priority': 5, 'cpu': 15, 'memory': 25, 'bandwidth': 2, 'category': 'infotainment'},
+            {'name': 'streaming-video', 'priority': 5, 'cpu': 25, 'memory': 40, 'bandwidth': 5, 'category': 'infotainment'},
+            {'name': 'games-engine', 'priority': 5, 'cpu': 30, 'memory': 50, 'bandwidth': 3, 'category': 'infotainment'},
+            {'name': 'social-media', 'priority': 5, 'cpu': 12, 'memory': 20, 'bandwidth': 2.5, 'category': 'infotainment'},
+            {'name': 'web-browser', 'priority': 5, 'cpu': 20, 'memory': 35, 'bandwidth': 3.5, 'category': 'infotainment'},
+            {'name': 'music-streaming', 'priority': 4, 'cpu': 8, 'memory': 15, 'bandwidth': 1.5, 'category': 'infotainment'},
+            {'name': 'video-calls', 'priority': 4, 'cpu': 18, 'memory': 28, 'bandwidth': 4, 'category': 'infotainment'},
+            {'name': 'ar-navigation', 'priority': 4, 'cpu': 35, 'memory': 45, 'bandwidth': 4.5, 'category': 'infotainment'},
+            {'name': 'news-reader', 'priority': 5, 'cpu': 6, 'memory': 12, 'bandwidth': 1, 'category': 'infotainment'},
+            {'name': 'weather-app', 'priority': 5, 'cpu': 4, 'memory': 8, 'bandwidth': 0.5, 'category': 'infotainment'}
         ]
         
         # Define Global UX Weights
