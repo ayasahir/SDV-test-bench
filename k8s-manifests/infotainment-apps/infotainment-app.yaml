@@ -1,0 +1,271 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: media-player
+  namespace: default
+  labels:
+    app: media-player
+    zone: infotainment
+    category: infotainment
+    priority: "5"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: media-player
+  template:
+    metadata:
+      labels:
+        app: media-player
+        zone: infotainment
+        category: infotainment
+        priority: "5"
+    spec:
+      nodeSelector:
+        zone: infotainment
+      containers:
+      - name: media-player
+        image: sdv-testbench/sdv-infotainment:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: "15m"
+            memory: "25Mi"
+          limits:
+            cpu: "30m"
+            memory: "50Mi"
+        env:
+        - name: APP_NAME
+          value: "media-player"
+        - name: PRIORITY
+          value: "5"
+        - name: BANDWIDTH_LIMIT
+          value: "2"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: streaming-video
+  namespace: default
+  labels:
+    app: streaming-video
+    zone: infotainment
+    category: infotainment
+    priority: "5"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: streaming-video
+  template:
+    metadata:
+      labels:
+        app: streaming-video
+        zone: infotainment
+        category: infotainment
+        priority: "5"
+    spec:
+      nodeSelector:
+        zone: infotainment
+      containers:
+      - name: streaming-video
+        image: sdv-testbench/sdv-infotainment:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: "25m"
+            memory: "40Mi"
+          limits:
+            cpu: "50m"
+            memory: "80Mi"
+        env:
+        - name: APP_NAME
+          value: "streaming-video"
+        - name: PRIORITY
+          value: "5"
+        - name: BANDWIDTH_LIMIT
+          value: "5"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: games-engine
+  namespace: default
+  labels:
+    app: games-engine
+    zone: infotainment
+    category: infotainment
+    priority: "5"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: games-engine
+  template:
+    metadata:
+      labels:
+        app: games-engine
+        zone: infotainment
+        category: infotainment
+        priority: "5"
+    spec:
+      nodeSelector:
+        zone: infotainment
+      containers:
+      - name: games-engine
+        image: busybox:latest
+        command: ["sh", "-c"]
+        args: ["while true; do echo '[Games Engine] Running entertainment games'; sleep 6; done"]
+        resources:
+          requests:
+            cpu: "30m"
+            memory: "50Mi"
+          limits:
+            cpu: "60m"
+            memory: "100Mi"
+        env:
+        - name: APP_NAME
+          value: "games-engine"
+        - name: PRIORITY
+          value: "5"
+        - name: BANDWIDTH_LIMIT
+          value: "3"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: social-media
+  namespace: default
+  labels:
+    app: social-media
+    zone: infotainment
+    category: infotainment
+    priority: "5"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: social-media
+  template:
+    metadata:
+      labels:
+        app: social-media
+        zone: infotainment
+        category: infotainment
+        priority: "5"
+    spec:
+      nodeSelector:
+        zone: infotainment
+      containers:
+      - name: social-media
+        image: busybox:latest
+        command: ["sh", "-c"]
+        args: ["while true; do echo '[Social Media] Managing social network feeds'; sleep 8; done"]
+        resources:
+          requests:
+            cpu: "12m"
+            memory: "20Mi"
+          limits:
+            cpu: "24m"
+            memory: "40Mi"
+        env:
+        - name: APP_NAME
+          value: "social-media"
+        - name: PRIORITY
+          value: "5"
+        - name: BANDWIDTH_LIMIT
+          value: "2.5"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-browser
+  namespace: default
+  labels:
+    app: web-browser
+    zone: infotainment
+    category: infotainment
+    priority: "5"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-browser
+  template:
+    metadata:
+      labels:
+        app: web-browser
+        zone: infotainment
+        category: infotainment
+        priority: "5"
+    spec:
+      nodeSelector:
+        zone: infotainment
+      containers:
+      - name: web-browser
+        image: busybox:latest
+        command: ["sh", "-c"]
+        args: ["while true; do echo '[Web Browser] Browsing internet content'; sleep 6; done"]
+        resources:
+          requests:
+            cpu: "20m"
+            memory: "35Mi"
+          limits:
+            cpu: "40m"
+            memory: "70Mi"
+        env:
+        - name: APP_NAME
+          value: "web-browser"
+        - name: PRIORITY
+          value: "5"
+        - name: BANDWIDTH_LIMIT
+          value: "3.5"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: music-streaming
+  namespace: default
+  labels:
+    app: music-streaming
+    zone: infotainment
+    category: infotainment
+    priority: "4"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: music-streaming
+  template:
+    metadata:
+      labels:
+        app: music-streaming
+        zone: infotainment
+        category: infotainment
+        priority: "4"
+    spec:
+      nodeSelector:
+        zone: infotainment
+      containers:
+      - name: music-streaming
+        image: sdv-testbench/sdv-infotainment:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: "8m"
+            memory: "15Mi"
+          limits:
+            cpu: "16m"
+            memory: "30Mi"
+        env:
+        - name: APP_NAME
+          value: "music-streaming"
+        - name: PRIORITY
+          value: "4"
+        - name: BANDWIDTH_LIMIT
+          value: "1.5"
