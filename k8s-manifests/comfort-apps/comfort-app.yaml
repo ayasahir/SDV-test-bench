@@ -21,8 +21,16 @@ spec:
         category: comfort
         priority: "3"
     spec:
-      nodeSelector:
-        zone: comfort
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+              operator: In
+              values:
+              - comfort
+              - infotainment  # Allow fallback to other zones
       containers:
       - name: climate-control
         image: sdv-testbench/sdv-comfort:latest
@@ -66,8 +74,16 @@ spec:
         category: comfort
         priority: "4"
     spec:
-      nodeSelector:
-        zone: comfort
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+              operator: In
+              values:
+              - comfort
+              - infotainment  # Allow fallback to other zones
       containers:
       - name: seat-adjustment
         image: sdv-testbench/sdv-comfort:latest
@@ -111,8 +127,16 @@ spec:
         category: comfort
         priority: "3"
     spec:
-      nodeSelector:
-        zone: comfort
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+              operator: In
+              values:
+              - comfort
+              - infotainment  # Allow fallback to other zones
       containers:
       - name: lighting-control
         image: sdv-testbench/sdv-comfort:latest
@@ -156,8 +180,16 @@ spec:
         category: comfort
         priority: "3"
     spec:
-      nodeSelector:
-        zone: comfort
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+              operator: In
+              values:
+              - comfort
+              - infotainment  # Allow fallback to other zones
       containers:
       - name: parking-assist
         image: sdv-testbench/sdv-comfort:latest
@@ -201,8 +233,16 @@ spec:
         category: comfort
         priority: "3"
     spec:
-      nodeSelector:
-        zone: comfort
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+              operator: In
+              values:
+              - comfort
+              - infotainment  # Allow fallback to other zones
       containers:
       - name: navigation-basic
         image: sdv-testbench/sdv-comfort:latest

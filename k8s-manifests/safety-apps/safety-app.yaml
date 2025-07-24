@@ -21,8 +21,17 @@ spec:
         category: safety
         priority: "1"
     spec:
-      nodeSelector:
-        zone: safety
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - Key: zone
+                operator: In 
+                values:
+                - safety
+                - comfort
+                - infotainment
       containers:
       - name: emergency-brake
         image: sdv-testbench/sdv-safety:latest
@@ -66,8 +75,17 @@ spec:
         category: safety
         priority: "1"
     spec:
-      nodeSelector:
-        zone: safety
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+              operator: In
+              values:
+              - safety
+              - comfort  # Allow fallback to other zones
+              - infotainment
       containers:
       - name: collision-avoidance
         image: sdv-testbench/sdv-safety:latest
@@ -111,8 +129,17 @@ spec:
         category: safety
         priority: "2"
     spec:
-      nodeSelector:
-        zone: safety
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+              operator: In
+              values:
+              - safety
+              - comfort  # Allow fallback to other zones
+              - infotainment
       containers:
       - name: lane-keeping
         image: sdv-testbench/sdv-safety:latest
@@ -156,8 +183,17 @@ spec:
         category: safety
         priority: "2"
     spec:
-      nodeSelector:
-        zone: safety
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+              operator: In
+              values:
+              - safety
+              - comfort  # Allow fallback to other zones
+              - infotainment
       containers:
       - name: adaptive-cruise
         image: sdv-testbench/sdv-safety:latest
@@ -201,8 +237,17 @@ spec:
         category: safety
         priority: "1"
     spec:
-      nodeSelector:
-        zone: safety
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+              operator: In
+              values:
+              - safety
+              - comfort  # Allow fallback to other zones
+              - infotainment
       containers:
       - name: driver-monitoring
         image: sdv-testbench/sdv-safety:latest
