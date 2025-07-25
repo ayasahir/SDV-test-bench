@@ -41,8 +41,6 @@ sudo apt update
 # Étape 3 - Installation des outils essentiels
 echo -e "${GREEN}=== [3/8] Installation des outils essentiels ===${NC}"
 sudo apt install -y curl wget git vim htop iotop nethogs iproute2 ethtool
-sudo apt install -y python3-pip
-pip3 install pyyaml kubernetes psutil
 
 # Étape 4 - Installation de Docker
 echo -e "${GREEN}=== [4/8] Installation de Docker ===${NC}"
@@ -155,8 +153,9 @@ echo ""
 
 for i in {10..1}; do
     echo -ne "Redémarrage dans $i secondes...\r"
-    echo "Run this after boot to limit network to 10Mbps:"
+    echo "Run this after boot to limit network to 10Mbps and to install python modules:"
     echo "sudo /usr/local/bin/setup_network_limit.sh"
+    echo "./install_python_tools.sh"
     sleep 1
 done
 
