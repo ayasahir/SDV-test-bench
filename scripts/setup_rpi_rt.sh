@@ -85,17 +85,17 @@ if ! ip link show $INTERFACE | grep -q "state UP"; then
     exit 1
 fi
 # Clear old tc rules
-tc qdisc del dev $INTERFACE root 2>/dev/null
+sudo tc qdisc del dev $INTERFACE root 2>/dev/null
 echo "[INFO] Cleared old rules" >> $LOG_FILE
 # Set 10Mbps limit
-if tc qdisc add dev $INTERFACE root tbf rate 10mbit burst 32kbit latency 400ms; then
+if sudo tc qdisc add dev $INTERFACE root tbf rate 10mbit burst 32kbit latency 400ms; then
     echo "[SUCCESS] 10Mbps limit set" >> $LOG_FILE
 else
     echo "[ERROR] Failed to set limit" >> $LOG_FILE
     exit 1
 fi
 # Show result
-tc qdisc show dev $INTERFACE >> $LOG_FILE
+sudo tc qdisc show dev $INTERFACE >> $LOG_FILE
 echo "[$(date)] Done" >> $LOG_FILE
 EOF
 
