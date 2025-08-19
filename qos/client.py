@@ -1,3 +1,4 @@
+#envoi l'image
 import socket
 import os
 

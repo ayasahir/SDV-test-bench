@@ -1,3 +1,4 @@
+#reçoit l'image
 import socket
 import os
 def receive_image():

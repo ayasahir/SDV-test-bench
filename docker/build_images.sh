@@ -45,13 +45,13 @@ build_image() {
 echo -e "${YELLOW}Building specialized SDV images...${NC}"
 
 # Image Safety
-build_image "docker/Dockerfile.safety" "sdv-safety" "Safety Applications"
+build_image "Dockerfile.safety" "sdv-safety" "Safety Applications"
 
 # Image Comfort  
-build_image "docker/Dockerfile.comfort" "sdv-comfort" "Comfort Applications"
+build_image "Dockerfile.comfort" "sdv-comfort" "Comfort Applications"
 
 # Image Infotainment
-build_image "docker/Dockerfile.infotainment" "sdv-infotainment" "Infotainment Applications"
+build_image "Dockerfile.infotainment" "sdv-infotainment" "Infotainment Applications"
 
 echo ""
 echo -e "${GREEN}=== Build Summary ===${NC}"
