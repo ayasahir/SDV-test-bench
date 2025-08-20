@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: image-client
+  template:
+    metadata:
+      labels:
+        app: image-client
+    spec:
+      containers:
+      - name: image-client
+        image: votre-compte/image-client:latest
