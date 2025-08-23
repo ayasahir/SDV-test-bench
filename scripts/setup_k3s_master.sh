@@ -31,32 +31,35 @@ echo "✓ Prérequis validés"
 
 # Installation K3s master
 echo -e "${GREEN}=== [2/6] Installation K3s Master ===${NC}"
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik --node-label role=orchestrator" sh -
-
-# Attendre que K3s soit prêt
-echo "Attente du démarrage de K3s..."
-for i in {1..30}; do
-    if sudo kubectl get nodes &>/dev/null; then
-        break
-    fi
-    sleep 2
-    echo -n "."
-done
-echo ""
-
-# Vérification de l'installation
-echo -e "${GREEN}=== [3/6] Vérification de l'installation ===${NC}"
-sudo kubectl get nodes
-if [ $? -ne 0 ]; then
-    echo -e "${RED}✗ Erreur lors de l'installation K3s${NC}"
+if ! curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="..." sh -; then
+    echo -e "${RED}x Echec installation K3s${NC}"
+    cleanup_k3s
     exit 1
 fi
+
+#Attente avec vérification d'échec
+for i in {1..30}; do 
+    sudo kubectl get nodes &>/dev/null && break
+    sleep 2
+done 
+
+if [ $i -eq 30 ]; then 
+    echo -e "${RED}x K3s non disponible${NC}"
+    cleanup_k3s
+    exit 1
+fi
+
+cleanup_k3s() {
+    sudo systemctl stop k3s 2>/dev/null || true
+    sudo /usr/local/bin/k3s-uninstall.sh 2>/dev/null || true 
+}
 
 # Configuration kubectl pour l'utilisateur
 echo -e "${GREEN}=== [4/6] Configuration kubectl pour l'utilisateur ===${NC}"
 mkdir -p ~/.kube
 sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
 sudo chown $USER:$USER ~/.kube/config
+chmod 600 ~/.kube/config   # Permissions restrictives
 export KUBECONFIG=~/.kube/config
 echo 'export KUBECONFIG=~/.kube/config' >> ~/.bashrc
 
