@@ -83,11 +83,28 @@ fi
 echo -e "${GREEN}=== [4/5] Installation K3s Worker ===${NC}"
 echo "Connexion au cluster: $K3S_URL"
 
-curl -sfL https://get.k3s.io | \
-    K3S_URL="$K3S_URL" \
-    K3S_TOKEN="$K3S_TOKEN" \
-    INSTALL_K3S_EXEC="--node-label zone=$ZONE --node-label role=worker" \
-    sh -
+if ! curl -sfL https://get.k3s.io | K3S_URL="$K3S_URL" K3S_TOKEN="$K3S_TOKEN" INSTALL_K3S_EXEC="..." sh -; then
+    echo -e "${RED}✗ Échec installation K3s worker${NC}"
+    cleanup_k3s_worker
+    exit 1
+fi
+
+# Attente avec vérification d'échec
+for i in {1..30}; do
+    sudo systemctl is-active --quiet k3s-agent && break
+    sleep 2
+done
+
+if [ $i -eq 30 ]; then
+    echo -e "${RED}✗ Service k3s-agent non démarré${NC}"
+    cleanup_k3s_worker  # ← Rollback après échec
+    exit 1
+fi
+
+cleanup_k3s_worker() {
+    sudo systemctl stop k3s-agent 2>/dev/null || true
+    sudo /usr/local/bin/k3s-agent-uninstall.sh 2>/dev/null || true
+}
 
 # Vérification de l'installation
 echo -e "${GREEN}=== [5/5] Vérification de l'installation ===${NC}"
