@@ -1,0 +1,268 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emergency-brake
+  namespace: default
+  labels:
+    app: emergency-brake
+    zone: safety
+    category: safety
+    priority: "1"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emergency-brake
+  template:
+    metadata:
+      labels:
+        app: emergency-brake
+        zone: safety
+        category: safety
+        priority: "1"
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - Key: zone
+                operator: In 
+                values:
+                - safety
+                - comfort
+                - infotainment
+      containers:
+      - name: emergency-brake
+        image: sdv-testbench/sdv-safety:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: "15m"
+            memory: "20Mi"
+          limits:
+            cpu: "30m"
+            memory: "40Mi"
+        env:
+        - name: APP_NAME
+          value: "emergency-brake"
+        - name: PRIORITY
+          value: "1"
+        - name: BANDWIDTH_LIMIT
+          value: "2"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: collision-avoidance
+  namespace: default
+  labels:
+    app: collision-avoidance
+    zone: safety
+    category: safety
+    priority: "1"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: collision-avoidance
+  template:
+    metadata:
+      labels:
+        app: collision-avoidance
+        zone: safety
+        category: safety
+        priority: "1"
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+              operator: In
+              values:
+              - safety
+              - comfort  # Allow fallback to other zones
+              - infotainment
+      containers:
+      - name: collision-avoidance
+        image: sdv-testbench/sdv-safety:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: "20m"
+            memory: "25Mi"
+          limits:
+            cpu: "40m"
+            memory: "50Mi"
+        env:
+        - name: APP_NAME
+          value: "collision-avoidance"
+        - name: PRIORITY
+          value: "1"
+        - name: BANDWIDTH_LIMIT
+          value: "3"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lane-keeping
+  namespace: default
+  labels:
+    app: lane-keeping
+    zone: safety
+    category: safety
+    priority: "2"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lane-keeping
+  template:
+    metadata:
+      labels:
+        app: lane-keeping
+        zone: safety
+        category: safety
+        priority: "2"
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+              operator: In
+              values:
+              - safety
+              - comfort  # Allow fallback to other zones
+              - infotainment
+      containers:
+      - name: lane-keeping
+        image: sdv-testbench/sdv-safety:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: "12m"
+            memory: "15Mi"
+          limits:
+            cpu: "24m"
+            memory: "30Mi"
+        env:
+        - name: APP_NAME
+          value: "lane-keeping"
+        - name: PRIORITY
+          value: "2"
+        - name: BANDWIDTH_LIMIT
+          value: "1.5"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adaptive-cruise
+  namespace: default
+  labels:
+    app: adaptive-cruise
+    zone: safety
+    category: safety
+    priority: "2"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adaptive-cruise
+  template:
+    metadata:
+      labels:
+        app: adaptive-cruise
+        zone: safety
+        category: safety
+        priority: "2"
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+              operator: In
+              values:
+              - safety
+              - comfort  # Allow fallback to other zones
+              - infotainment
+      containers:
+      - name: adaptive-cruise
+        image: sdv-testbench/sdv-safety:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: "18m"
+            memory: "22Mi"
+          limits:
+            cpu: "36m"
+            memory: "44Mi"
+        env:
+        - name: APP_NAME
+          value: "adaptive-cruise"
+        - name: PRIORITY
+          value: "2"
+        - name: BANDWIDTH_LIMIT
+          value: "2.5"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: driver-monitoring
+  namespace: default
+  labels:
+    app: driver-monitoring
+    zone: safety
+    category: safety
+    priority: "1"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: driver-monitoring
+  template:
+    metadata:
+      labels:
+        app: driver-monitoring
+        zone: safety
+        category: safety
+        priority: "1"
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+              operator: In
+              values:
+              - safety
+              - comfort  # Allow fallback to other zones
+              - infotainment
+      containers:
+      - name: driver-monitoring
+        image: sdv-testbench/sdv-safety:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: "10m"
+            memory: "18Mi"
+          limits:
+            cpu: "20m"
+            memory: "36Mi"
+        env:
+        - name: APP_NAME
+          value: "driver-monitoring"
+        - name: PRIORITY
+          value: "1"
+        - name: BANDWIDTH_LIMIT
+          value: "1"

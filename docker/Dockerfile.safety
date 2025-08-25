@@ -1,0 +1,45 @@
+# SDV Testbench - Safety Applications
+FROM alpine:3.18
+
+LABEL category="safety"
+LABEL priority="critical"
+LABEL description="Safety-critical vehicle applications"
+
+# Installation des outils
+RUN apk add --no-cache \
+    python3 \
+    py3-pip \
+    bash \
+    curl \
+     gcc \
+    musl-dev \
+    linux-headers \
+    python3-dev \
+    libffi-dev \
+    openssl-dev \
+    build-base \
+    && rm -rf /var/cache/apk/*
+
+# Installation des bibliothèques Python
+RUN pip3 install --no-cache-dir \
+    psutil \
+    requests
+
+# Variables d'environnement pour safety
+ENV SDV_APP_TYPE=safety
+ENV SDV_PRIORITY=critical
+ENV SDV_REAL_TIME=true
+
+# Répertoire de travail
+WORKDIR /app
+
+# Copie du simulateur safety
+COPY docker/safety_simulator.py /app/
+
+# Utilisateur non-root
+RUN adduser -D -s /bin/bash sdv
+RUN chown -R sdv:sdv /app
+USER sdv
+
+# Point d'entrée
+CMD ["python3", "/app/safety_simulator.py"] 

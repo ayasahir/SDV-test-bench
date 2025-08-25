@@ -1,0 +1,263 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: climate-control
+  namespace: default
+  labels:
+    app: climate-control
+    zone: comfort
+    category: comfort
+    priority: "3"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: climate-control
+  template:
+    metadata:
+      labels:
+        app: climate-control
+        zone: comfort
+        category: comfort
+        priority: "3"
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+              operator: In
+              values:
+              - comfort
+              - infotainment  # Allow fallback to other zones
+      containers:
+      - name: climate-control
+        image: sdv-testbench/sdv-comfort:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: "8m"
+            memory: "12Mi"
+          limits:
+            cpu: "16m"
+            memory: "24Mi"
+        env:
+        - name: APP_NAME
+          value: "climate-control"
+        - name: PRIORITY
+          value: "3"
+        - name: BANDWIDTH_LIMIT
+          value: "0.5"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seat-adjustment
+  namespace: default
+  labels:
+    app: seat-adjustment
+    zone: comfort
+    category: comfort
+    priority: "4"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: seat-adjustment
+  template:
+    metadata:
+      labels:
+        app: seat-adjustment
+        zone: comfort
+        category: comfort
+        priority: "4"
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+              operator: In
+              values:
+              - comfort
+              - infotainment  # Allow fallback to other zones
+      containers:
+      - name: seat-adjustment
+        image: sdv-testbench/sdv-comfort:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: "5m"
+            memory: "8Mi"
+          limits:
+            cpu: "10m"
+            memory: "16Mi"
+        env:
+        - name: APP_NAME
+          value: "seat-adjustment"
+        - name: PRIORITY
+          value: "4"
+        - name: BANDWIDTH_LIMIT
+          value: "0.2"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lighting-control
+  namespace: default
+  labels:
+    app: lighting-control
+    zone: comfort
+    category: comfort
+    priority: "3"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lighting-control
+  template:
+    metadata:
+      labels:
+        app: lighting-control
+        zone: comfort
+        category: comfort
+        priority: "3"
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+              operator: In
+              values:
+              - comfort
+              - infotainment  # Allow fallback to other zones
+      containers:
+      - name: lighting-control
+        image: sdv-testbench/sdv-comfort:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: "6m"
+            memory: "10Mi"
+          limits:
+            cpu: "12m"
+            memory: "20Mi"
+        env:
+        - name: APP_NAME
+          value: "lighting-control"
+        - name: PRIORITY
+          value: "3"
+        - name: BANDWIDTH_LIMIT
+          value: "0.3"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parking-assist
+  namespace: default
+  labels:
+    app: parking-assist
+    zone: comfort
+    category: comfort
+    priority: "3"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: parking-assist
+  template:
+    metadata:
+      labels:
+        app: parking-assist
+        zone: comfort
+        category: comfort
+        priority: "3"
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+              operator: In
+              values:
+              - comfort
+              - infotainment  # Allow fallback to other zones
+      containers:
+      - name: parking-assist
+        image: sdv-testbench/sdv-comfort:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: "15m"
+            memory: "20Mi"
+          limits:
+            cpu: "30m"
+            memory: "40Mi"
+        env:
+        - name: APP_NAME
+          value: "parking-assist"
+        - name: PRIORITY
+          value: "3"
+        - name: BANDWIDTH_LIMIT
+          value: "1.5"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: navigation-basic
+  namespace: default
+  labels:
+    app: navigation-basic
+    zone: comfort
+    category: comfort
+    priority: "3"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: navigation-basic
+  template:
+    metadata:
+      labels:
+        app: navigation-basic
+        zone: comfort
+        category: comfort
+        priority: "3"
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: zone
+              operator: In
+              values:
+              - comfort
+              - infotainment  # Allow fallback to other zones
+      containers:
+      - name: navigation-basic
+        image: sdv-testbench/sdv-comfort:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: "12m"
+            memory: "18Mi"
+          limits:
+            cpu: "24m"
+            memory: "36Mi"
+        env:
+        - name: APP_NAME
+          value: "navigation-basic"
+        - name: PRIORITY
+          value: "3"
+        - name: BANDWIDTH_LIMIT
+          value: "1"

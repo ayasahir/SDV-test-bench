@@ -1,0 +1,31 @@
+# user_profiles.yaml
+
+default:
+  safety: 3.0
+  comfort: 2.0
+  infotainment: 1.0
+
+eco:
+  safety: 2.0
+  comfort: 2.5
+  infotainment: 0.5
+
+family:
+  safety: 2.5
+  comfort: 3.0
+  infotainment: 1.0
+
+gamer:
+  safety: 1.5
+  comfort: 1.0
+  infotainment: 3.0
+
+driver_focus:
+  safety: 3.0
+  comfort: 1.0
+  infotainment: 0.0
+
+entertainment:
+  safety: 1.0
+  comfort: 1.5
+  infotainment: 3.5

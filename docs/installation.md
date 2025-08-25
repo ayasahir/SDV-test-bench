@@ -1,0 +1,11 @@
+# Guide d'installation détaillé
+
+## Prérequis
+- 4 Raspberry Pi 3 ou 4
+- Cartes SD 32GB+
+- Réseau local
+
+## Étapes d'installation
+1. Configurer chaque Raspberry Pi
+2. Installer K3s cluster
+3. Déployer AXIL

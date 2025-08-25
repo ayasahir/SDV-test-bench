@@ -1,0 +1,93 @@
+version: '3.8'
+
+# SDV Testbench - Docker Compose pour tests locaux
+# Permet de tester les applications sans Kubernetes
+
+services:
+  # Applications Safety
+  emergency-brake:
+    build: 
+      context: .
+      dockerfile: Dockerfile.safety
+    environment:
+      - APP_NAME=emergency-brake
+      - SDV_PRIORITY=critical
+      - SDV_REAL_TIME=true
+    container_name: sdv-emergency-brake
+    restart: unless-stopped
+    networks:
+      - sdv-network
+
+  collision-avoidance:
+    build: 
+      context: .
+      dockerfile: Dockerfile.safety
+    environment:
+      - APP_NAME=collision-avoidance
+      - SDV_PRIORITY=critical
+      - SDV_REAL_TIME=true
+    container_name: sdv-collision-avoidance
+    restart: unless-stopped
+    networks:
+      - sdv-network
+
+  # Applications Comfort
+  climate-control:
+    build: 
+      context: .
+      dockerfile: Dockerfile.comfort
+    environment:
+      - APP_NAME=climate-control
+      - SDV_PRIORITY=medium
+      - SDV_REAL_TIME=false
+    container_name: sdv-climate-control
+    restart: unless-stopped
+    networks:
+      - sdv-network
+
+  parking-assist:
+    build: 
+      context: .
+      dockerfile: Dockerfile.comfort
+    environment:
+      - APP_NAME=parking-assist
+      - SDV_PRIORITY=medium
+      - SDV_REAL_TIME=false
+    container_name: sdv-parking-assist
+    restart: unless-stopped
+    networks:
+      - sdv-network
+
+  # Applications Infotainment
+  media-player:
+    build: 
+      context: .
+      dockerfile: Dockerfile.infotainment
+    environment:
+      - APP_NAME=media-player
+      - SDV_PRIORITY=low
+      - SDV_REAL_TIME=false
+    container_name: sdv-media-player
+    restart: unless-stopped
+    networks:
+      - sdv-network
+
+  streaming-video:
+    build: 
+      context: .
+      dockerfile: Dockerfile.infotainment
+    environment:
+      - APP_NAME=streaming-video
+      - SDV_PRIORITY=low
+      - SDV_REAL_TIME=false
+    container_name: sdv-streaming-video
+    restart: unless-stopped
+    networks:
+      - sdv-network
+
+networks:
+  sdv-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16 
